@@ -1,13 +1,40 @@
-// Restaurant Daten mit spezifischen Adressen für das Map Iframe
+// Erweiterte Restaurant Daten für Sursee
 const restaurants = [
+  // 🥗 HEALTHY / VEGI
   {
     name: "Mensa BBZ",
-    auswahl: "Healthy Food",
+    auswahl: "Healthy Food & Menüs",
     budget: 20,
     distanz: "1min Fussweg",
     mood: "healthy",
     mapQuery: "BBZW Sursee",
   },
+  {
+    name: "Migros Daily Take Away",
+    auswahl: "Frische Salate & Bowls",
+    budget: 15,
+    distanz: "5min Fussweg",
+    mood: "healthy",
+    mapQuery: "Migros Daily Sursee",
+  },
+  {
+    name: "Thai-Restaurant Malou",
+    auswahl: "Thai Curries & Vegi",
+    budget: 25,
+    distanz: "10min Fussweg",
+    mood: "healthy",
+    mapQuery: "Restaurant Malou Sursee",
+  },
+  {
+    name: "Kochtopf Sursee",
+    auswahl: "Health Food & Vegan",
+    budget: 15,
+    distanz: "8min Fussweg",
+    mood: "healthy",
+    mapQuery: "Kochtopf Sursee",
+  },
+
+  // ☕ GEMÜTLICH / SITZEN
   {
     name: "Pizzeria Da Gino",
     auswahl: "Pizza & Pasta",
@@ -17,28 +44,78 @@ const restaurants = [
     mapQuery: "Pizzeria Da Gino Sursee",
   },
   {
+    name: "Wirtshaus Wilder Mann",
+    auswahl: "Schweizer Küche",
+    budget: 40,
+    distanz: "8min Fussweg",
+    mood: "gemuetlich",
+    mapQuery: "Wilder Mann Sursee",
+  },
+  {
+    name: "Theo's Gastropub",
+    auswahl: "Burger & Steaks",
+    budget: 45,
+    distanz: "8min Fussweg",
+    mood: "gemuetlich",
+    mapQuery: "Theos Gastropub Sursee",
+  },
+  {
+    name: "Baragge",
+    auswahl: "Amerikanisch & BBQ",
+    budget: 30,
+    distanz: "12min Fussweg",
+    mood: "gemuetlich",
+    mapQuery: "Baragge Sursee",
+  },
+  {
+    name: "Café Confiserie Surchat",
+    auswahl: "Kaffee & Sandwiches",
+    budget: 20,
+    distanz: "5min Fussweg",
+    mood: "gemuetlich",
+    mapQuery: "Confiserie Surchat Sursee",
+  },
+
+  // 🍕 FAST FOOD / TAKE-AWAY
+  {
+    name: "Bistro Mara",
+    auswahl: "Kebap, Pizza, Burger",
+    budget: 15,
+    distanz: "4min Fussweg",
+    mood: "fastfood",
+    mapQuery: "Bistro Mara Sursee",
+  },
+  {
     name: "McDonald's",
-    auswahl: "Fast Food",
+    auswahl: "Burger & Pommes",
     budget: 15,
     distanz: "6min Fussweg",
     mood: "fastfood",
     mapQuery: "McDonald's Sursee",
   },
   {
-    name: "Migros Restaurant",
-    auswahl: "Healthy Food",
-    budget: 25,
-    distanz: "5min Fussweg",
-    mood: "healthy",
-    mapQuery: "Migros Restaurant Surseepark",
-  },
-  {
-    name: "Kebab Point",
+    name: "Bahnhof Kebab",
     auswahl: "Döner & Dürüm",
     budget: 12,
     distanz: "3min Fussweg",
     mood: "fastfood",
     mapQuery: "Bahnhof Sursee",
+  },
+  {
+    name: "Mercato Pizza Kurier",
+    auswahl: "Take-Away Pizza",
+    budget: 20,
+    distanz: "7min Fussweg",
+    mood: "fastfood",
+    mapQuery: "Mercato Sursee",
+  },
+  {
+    name: "Sushi Kaiser",
+    auswahl: "Sushi Takeaway",
+    budget: 25,
+    distanz: "6min Fussweg",
+    mood: "fastfood",
+    mapQuery: "Sushi Kaiser Sursee",
   },
 ];
 
