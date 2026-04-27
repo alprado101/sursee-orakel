@@ -1,116 +1,223 @@
+:root {
+  --bg-orange: #f9b16e;
+  --bg-beige: #fdf2e9;
+  --btn-purple: #6a1b9a;
+  --btn-light: #e6e0f2;
+  --btn-red: #e53935;
+}
+
 body {
+  margin: 0;
   font-family: "Segoe UI", Arial, sans-serif;
+  background-color: var(--bg-beige); /* Ganze Seite im beigen Design */
+}
+
+/* Container nimmt jetzt die volle Breite wie eine echte Webseite */
+.app-container {
+  width: 100%;
+  max-width: 1200px; /* Begrenzt es bei extrem großen Monitoren auf eine schöne Breite */
+  margin: 0 auto; /* Zentriert die Webseite auf dem Bildschirm */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05); /* Leichter Schatten */
+  background-color: white; /* Der Inhalt hebt sich weiß ab */
+}
+
+.header,
+.footer {
+  background-color: var(--bg-orange);
+  padding: 30px;
   text-align: center;
-  background: #f4f4f9;
-  padding: 20px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 36px;
+} /* Größerer Titel */
+.header p {
+  margin: 10px 0 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 16px;
+  color: #555;
+}
+#nav-kontakt {
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.page {
+  display: none;
+  padding: 50px 20px;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+.page.active {
+  display: flex;
+}
+
+.section-block {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Größere Texte */
+.big-text {
+  font-size: 20px;
+  line-height: 1.6;
+  color: #444;
+}
+
+.mood-grid {
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  margin: 0;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-.container {
-  max-width: 400px;
-  width: 100%;
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-  margin-bottom: 5px;
-  color: #2c3e50;
-}
-.subtitle {
-  font-size: 0.9rem;
-  color: #7f8c8d;
-  margin-bottom: 25px;
-  font-style: italic;
-}
-
-.mood-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin: 25px 0;
-}
-
+/* Größere Buttons */
 .mood-btn {
-  padding: 10px;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 10px;
+  background-color: var(--btn-light);
+  color: #333;
   cursor: pointer;
-  border: 2px solid #ecf0f1;
-  border-radius: 12px;
-  background: white;
-  font-size: 0.85rem;
-  transition: all 0.2s ease;
+  font-size: 18px;
+  font-weight: bold;
+  transition: 0.2s;
 }
 
+.mood-btn:hover {
+  background-color: #d1c4e9;
+}
 .mood-btn.active {
-  border-color: #e67e22;
-  background: #fdf2e9;
+  background-color: var(--btn-purple);
+  color: white;
   transform: scale(1.05);
 }
 
-.btn-oracle {
-  background: #e67e22;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: bold;
+/* Slider & Größere Zahlen */
+.slider-container {
   width: 100%;
-  padding: 15px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background 0.3s;
+  margin-top: 20px;
 }
-
-.btn-oracle:hover {
-  background: #d35400;
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px; /* Größere Zahlen außen */
+  margin-bottom: 15px;
+  color: #555;
 }
-
-#result {
-  margin-top: 25px;
-  padding: 20px;
-  border: 2px dashed #bdc3c7;
-  border-radius: 15px;
-  background: #fafafa;
-  min-height: 120px;
-}
-
-.map-link {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 10px 20px;
-  background-color: #3498db;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
+#current-budget {
+  font-size: 28px; /* Die aktuelle Budget-Zahl ist jetzt riesig */
   font-weight: bold;
-  transition: background 0.3s;
+  color: var(--btn-purple);
+}
+input[type="range"] {
+  width: 100%;
+  cursor: pointer;
+  height: 8px;
+  accent-color: var(--btn-purple);
 }
 
-.map-link:hover {
-  background-color: #2980b9;
+.action-btn {
+  border: none;
+  padding: 15px 40px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 22px; /* Größerer Button Text */
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.3s;
+}
+.action-btn.red {
+  background-color: var(--btn-red);
+  color: white;
+  width: 100%;
+  max-width: 400px;
+}
+.action-btn.red:hover {
+  background-color: #c62828;
+}
+.back-to-start {
+  background-color: #ddd;
+  color: #333;
+}
+.back-to-start:hover {
+  background-color: #bbb;
 }
 
-/* Die Wackel-Animation */
-.shake {
-  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+/* Ergebnisse & Info Grid (Vollbild) */
+.result-layout,
+.info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  max-width: 1000px;
 }
 
-@keyframes shake {
-  10%,
-  90% {
-    transform: translate3d(-1px, 0, 0);
+/* Bessere, große Karte */
+.map-box {
+  width: 100%;
+  height: 350px; /* Viel größere Karte */
+  background: #eee;
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.map-overlay {
+  background: var(--btn-purple);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  transition: 0.3s;
+}
+.map-overlay:hover {
+  background: #4a148c;
+}
+#res-map-link {
+  text-decoration: none;
+}
+
+/* Desktop-Anpassung (Bildschirm aufteilen) */
+@media (min-width: 800px) {
+  .result-layout,
+  .info-grid {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
-  30%,
-  50%,
-  70% {
-    transform: translate3d(-4px, 0, 0);
+  .result-details,
+  .info-col {
+    flex: 1;
+    padding: 20px;
   }
-  40%,
-  60% {
-    transform: translate3d(4px, 0, 0);
+  .map-box {
+    flex: 1;
+    height: 400px;
   }
 }

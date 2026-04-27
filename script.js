@@ -1,133 +1,119 @@
+// Restaurant Daten mit spezifischen Adressen für das Map Iframe
 const restaurants = [
-  // Fast Food
   {
-    name: "Döner Point",
-    mood: "fastfood",
-    budget: "$",
-    distanz: "4 Min",
-    adresse: "Bahnhofstrasse 1, Sursee",
-    maps: "https://maps.google.com/?q=Bahnhofstrasse+1+Sursee",
+    name: "Mensa BBZ",
+    auswahl: "Healthy Food",
+    budget: 20,
+    distanz: "1min Fussweg",
+    mood: "healthy",
+    mapQuery: "BBZW Sursee",
+  },
+  {
+    name: "Pizzeria Da Gino",
+    auswahl: "Pizza & Pasta",
+    budget: 35,
+    distanz: "5min Fussweg",
+    mood: "gemuetlich",
+    mapQuery: "Pizzeria Da Gino Sursee",
   },
   {
     name: "McDonald's",
+    auswahl: "Fast Food",
+    budget: 15,
+    distanz: "6min Fussweg",
     mood: "fastfood",
-    budget: "$$",
-    distanz: "6 Min",
-    adresse: "Kyburgerstrasse 2, Sursee",
-    maps: "https://maps.google.com/?q=McDonalds+Sursee",
-  },
-  {
-    name: "Pizzeria Da Gina",
-    mood: "fastfood",
-    budget: "$$",
-    distanz: "5 Min",
-    adresse: "Bahnhofstrasse 26, Sursee",
-    maps: "https://maps.google.com/?q=Bahnhofstrasse+26+Sursee",
-  },
-
-  // Healthy
-  {
-    name: "Salat-Bar BBZ",
-    mood: "healthy",
-    budget: "$",
-    distanz: "1 Min",
-    adresse: "Moosgasse 1, Sursee",
-    maps: "https://maps.google.com/?q=Moosgasse+1+Sursee",
+    mapQuery: "McDonald's Sursee",
   },
   {
     name: "Migros Restaurant",
+    auswahl: "Healthy Food",
+    budget: 25,
+    distanz: "5min Fussweg",
     mood: "healthy",
-    budget: "$$",
-    distanz: "5 Min",
-    adresse: "Surseepark, Sursee",
-    maps: "https://maps.google.com/?q=Migros+Restaurant+Surseepark",
+    mapQuery: "Migros Restaurant Surseepark",
   },
   {
-    name: "Thai Garden",
-    mood: "healthy",
-    budget: "$$$",
-    distanz: "8 Min",
-    adresse: "Bahnhofstrasse 30, Sursee",
-    maps: "https://maps.google.com/?q=Thai+Garden+Sursee",
-  },
-
-  // Gemütlich
-  {
-    name: "Bistro Piazza",
-    mood: "gemuetlich",
-    budget: "$$",
-    distanz: "7 Min",
-    adresse: "Altstadt 12, Sursee",
-    maps: "https://maps.google.com/?q=Altstadt+12+Sursee",
-  },
-  {
-    name: "Café Surch",
-    mood: "gemuetlich",
-    budget: "$$",
-    distanz: "6 Min",
-    adresse: "Zentralstrasse 4, Sursee",
-    maps: "https://maps.google.com/?q=Zentralstrasse+4+Sursee",
-  },
-  {
-    name: "Restaurant Wyhof",
-    mood: "gemuetlich",
-    budget: "$$$",
-    distanz: "10 Min",
-    adresse: "Bahnhofstrasse 11, Sursee",
-    maps: "https://maps.google.com/?q=Restaurant+Wyhof+Sursee",
-  },
-  {
-    name: "Wilden Mann",
-    mood: "gemuetlich",
-    budget: "$$$",
-    distanz: "8 Min",
-    adresse: "Bahnhofstrasse 20, Sursee",
-    maps: "https://maps.google.com/?q=Wilden+Mann+Sursee",
+    name: "Kebab Point",
+    auswahl: "Döner & Dürüm",
+    budget: 12,
+    distanz: "3min Fussweg",
+    mood: "fastfood",
+    mapQuery: "Bahnhof Sursee",
   },
 ];
 
 let selectedMood = null;
 
-// Klick auf die Mood-Buttons
-document.querySelectorAll(".mood-btn").forEach((button) => {
-  button.addEventListener("click", function () {
+// Mood Auswahl Logik
+document.querySelectorAll(".mood-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
     document
       .querySelectorAll(".mood-btn")
-      .forEach((btn) => btn.classList.remove("active"));
-    this.classList.add("active");
-    selectedMood = this.id.replace("btn-", "");
-    document.getElementById("result").innerHTML =
-      `<p>Mood "${this.innerText}" ist bereit.</p>`;
+      .forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    selectedMood = btn.dataset.mood;
   });
 });
 
-// Klick auf das Orakel
-document.getElementById("spin-button").addEventListener("click", function () {
-  const resultDiv = document.getElementById("result");
+// Slider Update (jetzt ab 0)
+const slider = document.getElementById("budget-slider");
+slider.addEventListener("input", () => {
+  document.getElementById("current-budget").innerText = `CHF ${slider.value}`;
+});
 
+// Seiten-Navigation
+function switchPage(id) {
+  document
+    .querySelectorAll(".page")
+    .forEach((p) => p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo(0, 0); // Scrollt beim Wechseln nach ganz oben
+}
+
+// Orakel Starten
+document.getElementById("btn-start").addEventListener("click", () => {
   if (!selectedMood) {
-    resultDiv.innerHTML =
-      "<p style='color: red;'>Bitte wähle zuerst oben einen Mood aus!</p>";
+    alert("Bitte wähle zuerst einen Mood!");
     return;
   }
 
-  resultDiv.classList.add("shake");
-  resultDiv.innerHTML = "<p>Orakel denkt nach... 🎲</p>";
+  const budget = parseInt(slider.value);
 
-  setTimeout(() => {
-    resultDiv.classList.remove("shake");
-    const filtered = restaurants.filter((r) => r.mood === selectedMood);
+  // Finde Restaurants die zum Mood passen UND ins Budget passen (Budget ab 0 CHF)
+  const results = restaurants.filter(
+    (r) => r.mood === selectedMood && r.budget <= budget,
+  );
 
-    if (filtered.length > 0) {
-      const random = filtered[Math.floor(Math.random() * filtered.length)];
-      resultDiv.innerHTML = `
-                <h2 style="color: #e67e22; margin-top: 0;">${random.name}</h2>
-                <p><strong>Budget:</strong> ${random.budget} | <strong>Gehweg:</strong> ${random.distanz}</p>
-                <p style="font-size: 0.85rem; color: #7f8c8d;">${random.adresse}</p>
-                <a href="${random.maps}" target="_blank" class="map-link">📍 Route in Maps öffnen</a>
-            `;
-    } else {
-      resultDiv.innerHTML = "<p>Ups, kein Restaurant gefunden.</p>";
-    }
-  }, 800);
+  if (results.length > 0) {
+    const choice = results[Math.floor(Math.random() * results.length)];
+
+    document.getElementById("res-name").innerText = choice.name;
+    document.getElementById("res-auswahl").innerText = choice.auswahl;
+    document.getElementById("res-budget").innerText =
+      `CHF ${choice.budget} max.`;
+    document.getElementById("res-distanz").innerText = choice.distanz;
+
+    // Echte Google Maps iFrame URL generieren
+    const mapUrl = `https://maps.google.com/maps?q=${encodeURIComponent(choice.mapQuery)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+    document.getElementById("res-map-iframe").src = mapUrl;
+
+    // Link für den Button unten (öffnet echtes Google Maps)
+    document.getElementById("res-map-link").href =
+      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(choice.mapQuery)}`;
+
+    switchPage("ergebnisseite");
+  } else {
+    alert(
+      `Leider nichts gefunden für Mood '${selectedMood}' unter CHF ${budget}. Versuch ein höheres Budget!`,
+    );
+  }
 });
+
+// Navigation Events
+document.querySelectorAll(".back-to-start").forEach((btn) => {
+  btn.addEventListener("click", () => switchPage("startseite"));
+});
+
+document
+  .getElementById("nav-kontakt")
+  .addEventListener("click", () => switchPage("infoseite"));
