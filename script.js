@@ -132,7 +132,7 @@ document.querySelectorAll(".mood-btn").forEach((btn) => {
   });
 });
 
-// Slider Update (jetzt ab 0)
+// Slider Update
 const slider = document.getElementById("budget-slider");
 slider.addEventListener("input", () => {
   document.getElementById("current-budget").innerText = `CHF ${slider.value}`;
@@ -144,19 +144,17 @@ function switchPage(id) {
     .querySelectorAll(".page")
     .forEach((p) => p.classList.remove("active"));
   document.getElementById(id).classList.add("active");
-  window.scrollTo(0, 0); // Scrollt beim Wechseln nach ganz oben
+  window.scrollTo(0, 0);
 }
 
-// Orakel Starten
-document.getElementById("btn-start").addEventListener("click", () => {
+// Orakel Starten mit Spannungs-Effekt
+document.getElementById("btn-start").addEventListener("click", function () {
   if (!selectedMood) {
     alert("Bitte wähle zuerst einen Mood!");
     return;
   }
 
   const budget = parseInt(slider.value);
-
-  // Finde Restaurants die zum Mood passen UND ins Budget passen (Budget ab 0 CHF)
   const results = restaurants.filter(
     (r) => r.mood === selectedMood && r.budget <= budget,
   );
@@ -164,21 +162,32 @@ document.getElementById("btn-start").addEventListener("click", () => {
   if (results.length > 0) {
     const choice = results[Math.floor(Math.random() * results.length)];
 
-    document.getElementById("res-name").innerText = choice.name;
-    document.getElementById("res-auswahl").innerText = choice.auswahl;
-    document.getElementById("res-budget").innerText =
-      `CHF ${choice.budget} max.`;
-    document.getElementById("res-distanz").innerText = choice.distanz;
+    // Button visuell verändern für die Spannung
+    const originalText = this.innerText;
+    this.innerText = "Orakel denkt nach... 🎲";
+    this.style.backgroundColor = "#c62828";
 
-    // Echte Google Maps iFrame URL generieren
-    const mapUrl = `https://maps.google.com/maps?q=${encodeURIComponent(choice.mapQuery)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-    document.getElementById("res-map-iframe").src = mapUrl;
+    // Nach 800ms das Ergebnis anzeigen
+    setTimeout(() => {
+      document.getElementById("res-name").innerText = choice.name;
+      document.getElementById("res-auswahl").innerText = choice.auswahl;
+      document.getElementById("res-budget").innerText =
+        `ab CHF ${choice.budget}.`;
+      document.getElementById("res-distanz").innerText = choice.distanz;
 
-    // Link für den Button unten (öffnet echtes Google Maps)
-    document.getElementById("res-map-link").href =
-      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(choice.mapQuery)}`;
+      // HIER SIND DIE KORRIGIERTEN $ FÜR DIE MAPS LINKS
+      const mapUrl = `https://maps.google.com/maps?q=$${encodeURIComponent(choice.mapQuery)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+      document.getElementById("res-map-iframe").src = mapUrl;
 
-    switchPage("ergebnisseite");
+      document.getElementById("res-map-link").href =
+        `https://www.google.com/maps/search/?api=1&query=$${encodeURIComponent(choice.mapQuery)}`;
+
+      switchPage("ergebnisseite");
+
+      // Button für das nächste Mal zurücksetzen
+      this.innerText = originalText;
+      this.style.backgroundColor = "";
+    }, 800);
   } else {
     alert(
       `Leider nichts gefunden für Mood '${selectedMood}' unter CHF ${budget}. Versuch ein höheres Budget!`,
