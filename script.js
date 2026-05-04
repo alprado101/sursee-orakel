@@ -1,87 +1,64 @@
-// Erweiterte Restaurant Daten für Sursee
 const restaurants = [
   // 🥗 HEALTHY / VEGI
   {
     name: "Mensa BBZ",
     auswahl: "Healthy Food & Menüs",
     budget: 20,
-    distanz: "1min Fussweg",
+    distanzMin: 1,
     mood: "healthy",
     mapQuery: "BBZW Sursee",
   },
   {
-    name: "Migros Daily Take Away",
+    name: "Migros Daily",
     auswahl: "Frische Salate & Bowls",
     budget: 15,
-    distanz: "5min Fussweg",
+    distanzMin: 5,
     mood: "healthy",
     mapQuery: "Migros Daily Sursee",
   },
+
+  // 🍜 ASIATISCH
   {
     name: "Thai-Restaurant Malou",
-    auswahl: "Thai Curries & Vegi",
+    auswahl: "Thai Curries",
     budget: 25,
-    distanz: "10min Fussweg",
-    mood: "healthy",
+    distanzMin: 10,
+    mood: "asiatisch",
     mapQuery: "Restaurant Malou Sursee",
   },
   {
-    name: "Kochtopf Sursee",
-    auswahl: "Health Food & Vegan",
-    budget: 15,
-    distanz: "8min Fussweg",
-    mood: "healthy",
-    mapQuery: "Kochtopf Sursee",
+    name: "Sushi Kaiser",
+    auswahl: "Sushi Takeaway",
+    budget: 25,
+    distanzMin: 6,
+    mood: "asiatisch",
+    mapQuery: "Sushi Kaiser Sursee",
   },
 
-  // ☕ GEMÜTLICH / SITZEN
+  // ☕ GEMÜTLICH
   {
     name: "Pizzeria Da Gino",
     auswahl: "Pizza & Pasta",
     budget: 35,
-    distanz: "5min Fussweg",
+    distanzMin: 5,
     mood: "gemuetlich",
     mapQuery: "Pizzeria Da Gino Sursee",
   },
   {
-    name: "Wirtshaus Wilder Mann",
+    name: "Wilder Mann",
     auswahl: "Schweizer Küche",
     budget: 40,
-    distanz: "8min Fussweg",
+    distanzMin: 8,
     mood: "gemuetlich",
     mapQuery: "Wilder Mann Sursee",
   },
-  {
-    name: "Theo's Gastropub",
-    auswahl: "Burger & Steaks",
-    budget: 45,
-    distanz: "8min Fussweg",
-    mood: "gemuetlich",
-    mapQuery: "Theos Gastropub Sursee",
-  },
-  {
-    name: "Baragge",
-    auswahl: "Amerikanisch & BBQ",
-    budget: 30,
-    distanz: "12min Fussweg",
-    mood: "gemuetlich",
-    mapQuery: "Baragge Sursee",
-  },
-  {
-    name: "Café Confiserie Surchat",
-    auswahl: "Kaffee & Sandwiches",
-    budget: 20,
-    distanz: "5min Fussweg",
-    mood: "gemuetlich",
-    mapQuery: "Confiserie Surchat Sursee",
-  },
 
-  // 🍕 FAST FOOD / TAKE-AWAY
+  // 🍟 FAST FOOD
   {
     name: "Bistro Mara",
     auswahl: "Kebap, Pizza, Burger",
     budget: 15,
-    distanz: "4min Fussweg",
+    distanzMin: 4,
     mood: "fastfood",
     mapQuery: "Bistro Mara Sursee",
   },
@@ -89,7 +66,7 @@ const restaurants = [
     name: "McDonald's",
     auswahl: "Burger & Pommes",
     budget: 15,
-    distanz: "6min Fussweg",
+    distanzMin: 6,
     mood: "fastfood",
     mapQuery: "McDonald's Sursee",
   },
@@ -97,31 +74,33 @@ const restaurants = [
     name: "Bahnhof Kebab",
     auswahl: "Döner & Dürüm",
     budget: 12,
-    distanz: "3min Fussweg",
+    distanzMin: 3,
     mood: "fastfood",
     mapQuery: "Bahnhof Sursee",
   },
+
+  // 🥐 BÄCKER & CAFÉ
   {
-    name: "Mercato Pizza Kurier",
-    auswahl: "Take-Away Pizza",
+    name: "Confiserie Surchat",
+    auswahl: "Kaffee & Sandwiches",
     budget: 20,
-    distanz: "7min Fussweg",
-    mood: "fastfood",
-    mapQuery: "Mercato Sursee",
+    distanzMin: 5,
+    mood: "cafe",
+    mapQuery: "Confiserie Surchat Sursee",
   },
   {
-    name: "Sushi Kaiser",
-    auswahl: "Sushi Takeaway",
-    budget: 25,
-    distanz: "6min Fussweg",
-    mood: "fastfood",
-    mapQuery: "Sushi Kaiser Sursee",
+    name: "Bäckerei Kreyenbühl",
+    auswahl: "Snacks & Gebäck",
+    budget: 10,
+    distanzMin: 2,
+    mood: "cafe",
+    mapQuery: "Bäckerei Kreyenbühl Sursee",
   },
 ];
 
 let selectedMood = null;
 
-// Mood Auswahl Logik
+// 1. Mood Auswahl
 document.querySelectorAll(".mood-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     document
@@ -132,74 +111,79 @@ document.querySelectorAll(".mood-btn").forEach((btn) => {
   });
 });
 
-// Slider Update
-const slider = document.getElementById("budget-slider");
-slider.addEventListener("input", () => {
-  document.getElementById("current-budget").innerText = `CHF ${slider.value}`;
+// 2. Slider Updates
+const budgetSlider = document.getElementById("budget-slider");
+budgetSlider.addEventListener("input", () => {
+  document.getElementById("current-budget").innerText =
+    `CHF ${budgetSlider.value}`;
 });
 
-// Seiten-Navigation
+const timeSlider = document.getElementById("time-slider");
+timeSlider.addEventListener("input", () => {
+  document.getElementById("current-time").innerText = `${timeSlider.value} Min`;
+});
+
+// Navigation
 function switchPage(id) {
   document
     .querySelectorAll(".page")
     .forEach((p) => p.classList.remove("active"));
   document.getElementById(id).classList.add("active");
-  window.scrollTo(0, 0);
 }
 
-// Orakel Starten mit Spannungs-Effekt
+// 3. Orakel Starten
 document.getElementById("btn-start").addEventListener("click", function () {
   if (!selectedMood) {
-    alert("Bitte wähle zuerst einen Mood!");
+    alert("Bitte wähle zuerst eine Stimmung in Schritt 1 aus!");
     return;
   }
 
-  const budget = parseInt(slider.value);
+  const budget = parseInt(budgetSlider.value);
+  const maxTime = parseInt(timeSlider.value);
+
+  // Filter
   const results = restaurants.filter(
-    (r) => r.mood === selectedMood && r.budget <= budget,
+    (r) =>
+      r.mood === selectedMood && r.budget <= budget && r.distanzMin <= maxTime,
   );
 
   if (results.length > 0) {
     const choice = results[Math.floor(Math.random() * results.length)];
-
-    // Button visuell verändern für die Spannung
     const originalText = this.innerText;
-    this.innerText = "Orakel denkt nach... 🎲";
+
+    this.innerText = "Orakel sucht... 🎲";
     this.style.backgroundColor = "#c62828";
 
-    // Nach 800ms das Ergebnis anzeigen
     setTimeout(() => {
       document.getElementById("res-name").innerText = choice.name;
       document.getElementById("res-auswahl").innerText = choice.auswahl;
+
       document.getElementById("res-budget").innerText =
-        `ab CHF ${choice.budget}.`;
-      document.getElementById("res-distanz").innerText = choice.distanz;
+        `ab CHF ${choice.budget}`;
+      document.getElementById("res-distanz").innerText =
+        `${choice.distanzMin} Min. Fussweg`;
 
-      // HIER SIND DIE KORRIGIERTEN $ FÜR DIE MAPS LINKS
-      const mapUrl = `https://maps.google.com/maps?q=$${encodeURIComponent(choice.mapQuery)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-      document.getElementById("res-map-iframe").src = mapUrl;
-
+      const embedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(choice.mapQuery)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+      document.getElementById("res-map-iframe").src = embedUrl;
       document.getElementById("res-map-link").href =
-        `https://www.google.com/maps/search/?api=1&query=$${encodeURIComponent(choice.mapQuery)}`;
+        `https://maps.google.com/?q=Bahnhofstrasse+26+Sursee4{encodeURIComponent(choice.mapQuery)}`;
 
       switchPage("ergebnisseite");
 
-      // Button für das nächste Mal zurücksetzen
       this.innerText = originalText;
       this.style.backgroundColor = "";
     }, 800);
   } else {
     alert(
-      `Leider nichts gefunden für Mood '${selectedMood}' unter CHF ${budget}. Versuch ein höheres Budget!`,
+      `Nichts gefunden für max. CHF ${budget} und max. ${maxTime} Min. Gehweg. Versuch die Limits anzupassen!`,
     );
   }
 });
 
-// Navigation Events
+// Zurück-Buttons
 document.querySelectorAll(".back-to-start").forEach((btn) => {
   btn.addEventListener("click", () => switchPage("startseite"));
 });
-
 document
   .getElementById("nav-kontakt")
   .addEventListener("click", () => switchPage("infoseite"));

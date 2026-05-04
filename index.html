@@ -10,57 +10,89 @@
     <div class="app-container">
       <header class="header">
         <h1>Sursee-ORakel</h1>
-        <p>Finde das Essen, das heute zu deiner Stimmung passt</p>
+        <p>Finde das Essen, das heute zu deiner Stimmung und Zeit passt</p>
       </header>
 
       <main class="content">
         <section id="startseite" class="page active">
           <div class="section-block">
-            <h2>Mood Auswahl</h2>
+            <h2>1. Wähle deine Stimmung</h2>
             <div class="mood-grid">
-              <button class="mood-btn" data-mood="healthy">Healthy</button>
-              <button class="mood-btn" data-mood="gemuetlich">Gemütlich</button>
-              <button class="mood-btn" data-mood="fastfood">Fast-Food</button>
+              <button class="mood-btn" data-mood="healthy">🥗 Healthy</button>
+              <button class="mood-btn" data-mood="gemuetlich">
+                ☕ Gemütlich
+              </button>
+              <button class="mood-btn" data-mood="fastfood">
+                🍟 Fast-Food
+              </button>
+              <button class="mood-btn" data-mood="asiatisch">
+                🍜 Asiatisch
+              </button>
+              <button class="mood-btn" data-mood="cafe">
+                🥐 Bäcker & Café
+              </button>
             </div>
           </div>
 
           <div class="section-block">
-            <h2>Budget Filter</h2>
-            <div class="slider-container">
-              <div class="slider-labels">
-                <span>CHF 0</span>
-                <span id="current-budget">CHF 0</span>
-                <span>CHF 100</span>
+            <h2>2. Setze deine Limits</h2>
+            <div class="filters-row">
+              <div class="slider-box">
+                <label>Max. Budget</label>
+                <div class="slider-labels">
+                  <span>0</span>
+                  <span id="current-budget" class="highlight-val">CHF 0</span>
+                  <span>100</span>
+                </div>
+                <input
+                  type="range"
+                  id="budget-slider"
+                  min="0"
+                  max="100"
+                  value="0"
+                  step="5"
+                />
               </div>
-              <input
-                type="range"
-                id="budget-slider"
-                min="0"
-                max="100"
-                value="0"
-                step="5"
-              />
+
+              <div class="slider-box">
+                <label>Max. Gehdistanz</label>
+                <div class="slider-labels">
+                  <span>0 Min</span>
+                  <span id="current-time" class="highlight-val">0 Min</span>
+                  <span>20 Min</span>
+                </div>
+                <input
+                  type="range"
+                  id="time-slider"
+                  min="0"
+                  max="20"
+                  value="0"
+                  step="1"
+                />
+              </div>
             </div>
           </div>
 
-          <button id="btn-start" class="action-btn red">Orakel Starten</button>
+          <div class="section-block start-btn-container">
+            <h2>3. Lass entscheiden!</h2>
+            <button id="btn-start" class="action-btn red">
+              Orakel Starten
+            </button>
+          </div>
         </section>
 
         <section id="ergebnisseite" class="page">
           <div class="result-layout">
             <div class="result-details">
-              <h2 id="res-name">Mensa BBZ</h2>
+              <h2 id="res-name">Restaurant Name</h2>
               <p class="big-text">
-                <strong>Auswahl:</strong>
-                <span id="res-auswahl">Healthy Food</span>
+                <strong>Auswahl:</strong> <span id="res-auswahl">-</span>
               </p>
               <p class="big-text">
-                <strong>Budget:</strong>
-                <span id="res-budget">CHF 20 max.</span>
+                <strong>Preis:</strong> <span id="res-budget">-</span>
               </p>
               <p class="big-text">
-                <strong>Distanzweg:</strong>
-                <span id="res-distanz">1min Fussweg</span>
+                <strong>Weg:</strong> <span id="res-distanz">-</span>
               </p>
             </div>
             <div class="map-box">
@@ -70,9 +102,6 @@
                 width="100%"
                 height="100%"
                 frameborder="0"
-                scrolling="no"
-                marginheight="0"
-                marginwidth="0"
                 src=""
               ></iframe>
               <a id="res-map-link" href="#" target="_blank">

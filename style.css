@@ -6,57 +6,71 @@
   --btn-red: #e53935;
 }
 
+html,
 body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-beige);
   font-family: "Segoe UI", Arial, sans-serif;
-  background-color: var(--bg-beige); /* Ganzer Hintergrund in Beige */
-  min-height: 100vh;
+}
+
+body {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
 }
 
 .app-container {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--bg-beige); /* Kein weißer Kasten mehr */
-  box-shadow: none; /* Kein Schatten mehr für nahtlosen Übergang */
-}
-
-.content {
-  flex-grow: 0.5; /* Drückt den Footer nach unten */
-  display: flex;
-  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--bg-beige);
 }
 
 .header,
 .footer {
   background-color: var(--bg-orange);
-  padding: 30px;
+  padding: 15px 20px;
   text-align: center;
-}
-
-.footer {
-  margin-top: auto; /* Klebt den Footer ganz nach unten ans Ende */
+  flex-shrink: 0;
 }
 
 .header h1 {
   margin: 0;
-  font-size: 36px;
+  font-size: clamp(24px, 4vw, 32px);
 }
 .header p {
-  margin: 10px 0 0;
-  font-size: 18px;
+  margin: 5px 0 0;
+  font-size: clamp(14px, 2vw, 16px);
   color: #333;
 }
 
+.content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.page {
+  display: none;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.page.active {
+  display: flex;
+}
+
 .footer p {
-  margin: 5px;
-  font-size: 18px;
+  margin: 0;
+  font-size: 16px;
   color: #555;
 }
 #nav-kontakt {
@@ -65,82 +79,90 @@ body {
   font-weight: bold;
 }
 
-.page {
-  display: none;
-  padding: 50px 20px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start; /* Verhindert das Springen der Inhalte */
-  flex-grow: 1;
-}
-.page.active {
-  display: flex;
-}
-
+/* Inhalts-Elemente */
 .section-block {
   width: 100%;
-  max-width: 600px;
-  margin-bottom: 50px;
+  max-width: 700px;
+  margin-bottom: 25px;
   text-align: center;
 }
 
 h2 {
-  font-size: 28px;
+  font-size: 22px;
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .big-text {
-  font-size: 20px;
-  line-height: 1.6;
+  font-size: 18px;
+  line-height: 1.4;
   color: #444;
 }
 
 .mood-grid {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
 .mood-btn {
   border: none;
-  padding: 15px 30px;
+  padding: 12px 20px;
   border-radius: 10px;
   background-color: var(--btn-light);
   color: #333;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   transition: 0.2s;
 }
 
-.mood-btn:hover {
-  background-color: #d1c4e9;
-}
 .mood-btn.active {
   background-color: var(--btn-purple);
   color: white;
   transform: scale(1.05);
 }
 
-.slider-container {
+/* Sliders */
+.filters-row {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   width: 100%;
-  margin-top: 20px;
 }
+
+.slider-box {
+  background: white;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  flex: 1;
+}
+
+.slider-box label {
+  display: block;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
 .slider-labels {
   display: flex;
   justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #777;
   align-items: center;
-  font-size: 18px;
-  margin-bottom: 15px;
-  color: #555;
 }
-#current-budget {
-  font-size: 28px;
+
+.highlight-val {
+  font-size: 22px;
   font-weight: bold;
   color: var(--btn-purple);
 }
+
 input[type="range"] {
   width: 100%;
   cursor: pointer;
@@ -148,84 +170,85 @@ input[type="range"] {
   accent-color: var(--btn-purple);
 }
 
+.start-btn-container {
+  margin-bottom: 0;
+}
+
 .action-btn {
   border: none;
   padding: 15px 40px;
   border-radius: 10px;
   font-weight: bold;
-  font-size: 22px;
+  font-size: 20px;
   cursor: pointer;
-  margin-top: 20px;
   transition: 0.3s;
 }
 .action-btn.red {
   background-color: var(--btn-red);
   color: white;
   width: 100%;
-  max-width: 400px;
+  max-width: 350px;
 }
-.action-btn.red:hover {
-  background-color: #c62828;
-}
+
 .back-to-start {
   background-color: #ddd;
   color: #333;
+  margin-top: 30px; /* Aquí está el gap añadido que separa el botón del mapa */
 }
 .back-to-start:hover {
   background-color: #bbb;
 }
 
+/* Map & Ergebnisse */
 .result-layout,
 .info-grid {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 20px;
   width: 100%;
-  max-width: 1000px;
+  max-width: 900px;
 }
 
 .map-box {
   width: 100%;
-  height: 350px;
+  height: 180px; /* Mapa más pequeño en celulares */
   background: #eee;
   position: relative;
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .map-overlay {
   background: var(--btn-purple);
   color: white;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
-  padding: 12px;
+  padding: 10px;
   text-align: center;
   text-decoration: none;
   display: block;
-  transition: 0.3s;
-}
-.map-overlay:hover {
-  background: #4a148c;
-}
-#res-map-link {
-  text-decoration: none;
 }
 
 @media (min-width: 800px) {
+  body {
+    overflow: hidden;
+  }
+  .app-container {
+    height: 100vh;
+  }
+  .filters-row {
+    flex-direction: row;
+  }
   .result-layout,
   .info-grid {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
   }
-  .result-details,
-  .info-col {
-    flex: 1;
-    padding: 20px;
-  }
   .map-box {
-    flex: 1;
-    height: 400px;
+    height: 250px;
+  } /* Mapa más pequeño en PC (antes era 350px) */
+  .section-block {
+    margin-bottom: 20px;
   }
 }
